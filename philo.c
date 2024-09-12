@@ -13,7 +13,7 @@
 #include "philo.h"
 
 
-int	check_argvs(char **argv)
+/* int	check_argvs(char **argv)
 {
 	int	i;
 	int	j;
@@ -31,33 +31,61 @@ int	check_argvs(char **argv)
 		i++;
 	}
 	return (1);
+} */
+
+void	routine(t_table *table) //¿necesitara el philo especifico?
+{
+	while(table->death == 0)
+	{
+	//if (ft_comen(t_eat)) tiene q chekear  los tenedore,si no  puede comer pasa  a  pensar;
+		//usleep(50); ta pensando
+	
+	usleep(table->t_sleep);//duerme, necesita algo  mas?
+	//ft_printeacion(table->text);
+	}
 }
 
  void	table_init(t_table *table, char **argv)
 {
-	table = malloc(sizeof(t_table));
+	/*table = malloc(sizeof(t_table));
 	if (!table)
-		ft_error("fail malloc of the table struct\n");
-	table->start = get_now();
+		ft_error("fail malloc of the table struct\n");*/
 	table->count = ft_atoi(argv[1]);
 	table->t_die = ft_atoi(argv[2]);
 	table->t_eat = ft_atoi(argv[3]);
 	table->t_sleep = ft_atoi(argv[4]);
+	table->start = get_now();
+	table->death = 0;
+	if (table->t_die < 0 || table->t_sleep < 0 || table->t_eat < 0 || table->count < 2)
+		ft_error ("Arguments aren't valid\n");
+	if (argv[5])
+	{
+		if ((table->n_meals = ft_atoi(argv[5])) < 0)
+			ft_error("Arguments can`t be negative\n");
+	}
+	else
+		table->n_meals = -1;
+	mutex_init(table);
+	philo_init(table);
 	
 }
 
- void	philo_init(t_philo *philo, char **argv)
+void	mutex_init(t_table *table)
+{
+	
+}
+
+ void	philo_init(t_table *table)
 {
 	int	i;
-	int	count;
 
-	i = 1;
-	count = ft_atoi(argv[1]);
-	while (i != count)
+	i = table->count;
+	while (i > 0)
 	{
-		philo->nb = count;
+		table->philos[i] = i;
+		table->philos[i]->
 		//philo->thread = funcion inicio thread?
-		i++;
+		i--;
 	}
 	
 
@@ -67,14 +95,13 @@ int	check_argvs(char **argv)
 int	main(int argc, char **argv)
 {
 	t_table table;
-	t_philo philo;
+	//t_philo philo;
 
 	if(argc == 5 || argc == 6)
 	{
 		//if (!check_argvs(argv));
 			//mensaje error;
 		table = table__init(&table, argv);
-		//philo_init(&philo, argv);
 	}
 	else
 		ft_error("argument count is not correct\n")

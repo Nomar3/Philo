@@ -32,9 +32,11 @@ typedef struct s_table
 	int	t_die;
 	int	count;
 	int death;
+	int	n_meals;
 	long	start;
-	pthread_mutex_t	*forks;
+	pthread_mutex_t	forks[200];
 	pthread_mutex_t	print;
+	t_philo	philos[200];
 
 }	t_table;
 
@@ -54,6 +56,9 @@ typedef struct s_philo
 /*----------philo----------*/
 long	get_now(void);
 
+/*------------times------------*/
+long	get_now(void);
+long	time_diff(long past, long now);
 /*----------utils----------*/
 int		ft_atoi(const char *str);
 void	ft_error(char *text);

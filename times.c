@@ -21,6 +21,15 @@ long	get_now(void)
 	return((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-int	philo_is_death()
-{}
+long	time_diff(long past, long now)
+{
+	return(now - past);
+}
 
+/* int	check_death(t_table *table)
+{
+	if(table->death == 1)
+		return(1);
+	else
+		return(0);
+} */

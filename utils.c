@@ -37,3 +37,10 @@ int	ft_atoi(const char *str)
 		ft_error("number too long\n");
 	return ((int) nb);
 }
+void	ft_wdoing(t_philo *philo, char *doing)
+{
+	long	time;
+
+	time = time_diff(philo->table->start, get_now());
+	printf("[%i] Philo %i %s\n", time, philo->nb,  doing);
+}
