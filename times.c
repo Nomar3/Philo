@@ -6,7 +6,7 @@
 /*   By: rmarin-j <rmarin-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 17:53:24 by rmarin-j          #+#    #+#             */
-/*   Updated: 2024/09/06 12:25:15 by rmarin-j         ###   ########.fr       */
+/*   Updated: 2024/09/13 20:06:51 by rmarin-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ long	get_now(void)
 {
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
-	printf("segundos: %ld\n", tv.tv_sec);
-	printf("microsegundos: %ld\n", tv.tv_usec);
+	//printf("segundos: %ld\n", tv.tv_sec);
+	//printf("microsegundos: %ld\n", tv.tv_usec);
 	return((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
@@ -26,10 +26,23 @@ long	time_diff(long past, long now)
 	return(now - past);
 }
 
-/* int	check_death(t_table *table)
+ int	check_death(t_philo * philo)
 {
-	if(table->death == 1)
+	pthread_mutex_lock(philo->table->print);
+	if(philo->table->death == 1)
+	{
+		pthread_mutex_unlock(philo->table->print);
 		return(1);
-	else
-		return(0);
-} */
+	}
+	pthread_mutex_unlock(philo->table->print);
+	if (philo->last_food <= philo->table->t_die)//revisar
+	{
+		pthread_mutex_lock(philo->table->print);
+		philo->table->death = 1;
+		ft_wdoing(philo, DEAD);
+		pthread_mutex_unlock(philo->table->print);
+	}
+	return(0);
+	
+
+}
