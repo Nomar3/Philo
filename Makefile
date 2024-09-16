@@ -54,16 +54,4 @@ fclean:		clean
 			@ echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)binary ✔️"
 
 re:			fclean all
-
-################################################################################
-#                                 PROGRAM'S SRCS                               #
-################################################################################
-
-SRCS        :=      philo.c \
-                          times.c \
-                          utils.c \
-                          
-OBJS        := $(SRCS:.c=.o)
-
-.c.o:
-	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
+.PHONY:		all clean fclean re

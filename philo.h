@@ -6,7 +6,7 @@
 /*   By: rmarin-j <rmarin-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 17:33:49 by rmarin-j          #+#    #+#             */
-/*   Updated: 2024/09/13 20:08:23 by rmarin-j         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:24:15 by rmarin-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,31 @@ typedef struct s_table
 	int death;
 	int	n_meals;
 	long	start;
-	pthread_mutex_t	*forks;
+	pthread_mutex_t	forks[200];
 	pthread_mutex_t	print;
-
 }	t_table;
 
 typedef struct s_philo
 {
 	int	nb;
-	int	last_food;
+	long	last_food;
 	int	times_eat;
-	pthread_mutex_t	own_fork;
-	pthread_mutex_t	r_fork;
+	pthread_mutex_t	*own_fork;
+	pthread_mutex_t	*r_fork;
 	pthread_t	thread;
-	struct s_table *table;
+	t_table *table;
 
 }	t_philo;
 
 
 /*----------philo----------*/
-t_table	*table_init(char **argv);
+int ft_waiting(t_philo * philo, int time);
+int	ph_eat(t_philo *philo);
 void	*routine(void *param);
-t_philo	*philo_init(t_table *table);
+
+void	table_init(char **argv, t_table *table);
+void	*routine(void *param);
+void	philo_init(t_table *table, t_philo *philos);
 void	mutex_init(t_table *table);
 /*------------times------------*/
 long	get_now(void);

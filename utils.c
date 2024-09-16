@@ -6,7 +6,7 @@
 /*   By: rmarin-j <rmarin-j@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:13:50 by rmarin-j          #+#    #+#             */
-/*   Updated: 2024/09/13 19:34:36 by rmarin-j         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:47:03 by rmarin-j         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,13 @@ int	ft_atoi(const char *str)
 
 	return ((int) nb);
 }
-void	ft_wdoing(t_philo *philo, char *doing)
-{
-	long	time;
+ void	ft_wdoing(t_philo *philo, char *doing)
+ {
+ 	long	time;
 
-	time = time_diff(philo->table->start, get_now());
-	printf("[%li] Philo %i %s\n", time, philo->nb,  doing);
-}
+ 	time = time_diff(philo->table->start, get_now());
+	pthread_mutex_lock(&philo->table->print);
+	if (philo->table->death == 0)
+		printf("[%li] Philo %i %s", time, philo->nb,  doing);
+	pthread_mutex_unlock(&philo->table->print);
+ }
