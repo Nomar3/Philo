@@ -17,6 +17,7 @@ FLAGS    := -Wall -Wextra -Werror -pthread
 SRCS        :=      philo.c \
                           times.c \
                           utils.c \
+						  init.c \
                           
 OBJS        := $(SRCS:.c=.o)
 
