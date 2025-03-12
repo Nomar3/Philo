@@ -1,0 +1,32 @@
+/*Esta funcion solo coge la siguiente palabra despues
+de la redireccion, q tiene q ser el archivo al q hace ref*/
+
+char	*getfilename(char *str, int i, t_redir *rd)
+{
+	int	start;
+
+	while (ft_isspace(str[i]) && str[i])
+		i++;
+	start = i;
+	if (!str[i] || str[i] == '<' || str[i] == '>')
+		return (NULL);
+	else if (str[i] == '\"')
+	{
+		i = end_quote(str, i + 1, '\"');
+		rd->end_in = i;
+		return (ft_substr(str, start, i - start));
+	}
+	else if (str[i] == '\'')
+	{
+		i = end_quote(str, i + 1, '\'');
+		rd->end_in = i;
+		return (ft_substr(str, start, i - start));
+	}
+	else
+	{
+		while (!ft_isspace(str[i]) && str[i])
+			i++;
+		rd->end_in = i;
+		return (ft_substr(str, start, i - start));
+	}
+}
